@@ -197,6 +197,17 @@ img { max-width: 100%; }
   padding: 7.5rem 0 9rem;
   overflow: hidden;
 }
+/* faint photographic texture beneath the gradient */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../img/photos/neighborhood.jpg") center/cover no-repeat;
+  opacity: 0.14;
+  mix-blend-mode: luminosity;
+  pointer-events: none;
+}
+.hero .container { position: relative; z-index: 1; }
 .hero h1 {
   font-size: clamp(2.3rem, 5.2vw, 3.7rem);
   font-weight: 700;
@@ -247,11 +258,23 @@ img { max-width: 100%; }
 .band { padding: 4.5rem 0; }
 .band-cream { background: linear-gradient(180deg, var(--cream) 0%, var(--gold-tint) 100%); }
 .band-dark {
+  position: relative;
+  overflow: hidden;
   background:
     radial-gradient(50rem 26rem at 90% -20%, rgba(196, 149, 58, 0.22), transparent 55%),
     linear-gradient(150deg, var(--slate) 0%, var(--slate-pressed) 100%);
   color: #fff;
 }
+.band-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../img/photos/city.jpg") center/cover no-repeat;
+  opacity: 0.09;
+  mix-blend-mode: luminosity;
+  pointer-events: none;
+}
+.band-dark .container { position: relative; z-index: 1; }
 .band-dark .section-bar { color: #fff; }
 .band-dark .btn { background: #fff; color: var(--slate); }
 .band-dark .btn:hover { background: var(--cream); color: var(--slate); }
@@ -563,6 +586,17 @@ form.stacked .btn { margin-top: 1.7rem; }
 table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
 th, td { text-align: left; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--light-gray); }
 th { background: var(--grad-slate); color: #fff; font-weight: 700; }
+
+/* Visible photo banner */
+.photo-banner {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  margin: 1.75rem 0 0.75rem;
+  filter: saturate(0.85);
+}
 
 /* Gradient accent rule */
 hr.gold-rule {
