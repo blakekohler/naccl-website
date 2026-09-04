@@ -56,6 +56,7 @@ a:hover { color: var(--orange-hover); }
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 3px solid var(--orange);
+  border-image: linear-gradient(90deg, var(--orange), var(--gold)) 1;
   padding: 1rem 0;
 }
 .site-header .container {
@@ -66,20 +67,7 @@ a:hover { color: var(--orange-hover); }
   gap: 0.75rem 1rem;
 }
 .wordmark { text-decoration: none; display: block; }
-.wordmark .acronym {
-  display: block;
-  color: var(--slate);
-  font-weight: 700;
-  font-size: 1.6rem;
-  letter-spacing: 0.18em;
-  line-height: 1.15;
-}
-.wordmark .fullname {
-  display: block;
-  color: var(--charcoal);
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
-}
+.wordmark img { display: block; height: 52px; width: auto; }
 
 .site-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 0.25rem 1.35rem; }
 .site-nav a {
@@ -106,7 +94,7 @@ a:hover { color: var(--orange-hover); }
 /* Buttons — orange passes contrast at large/UI sizes only */
 .btn {
   display: inline-block;
-  background: var(--orange);
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-pressed) 100%);
   color: #fff;
   font-weight: 700;
   font-size: 1rem;
@@ -116,17 +104,16 @@ a:hover { color: var(--orange-hover); }
   text-decoration: none;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
-  transition: background 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease), filter 0.2s var(--ease);
 }
-.btn:hover { background: var(--orange-hover); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow-md); }
-.btn:active { background: var(--orange-pressed); transform: translateY(0); }
-.btn-slate { background: var(--slate); }
-.btn-slate:hover { background: var(--slate-hover); }
-.btn-slate:active { background: var(--slate-pressed); }
+.btn:hover { filter: brightness(0.94); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn:active { filter: brightness(0.86); transform: translateY(0); }
+.btn-slate { background: linear-gradient(135deg, var(--slate) 0%, var(--slate-pressed) 100%); }
 
-/* Hero */
+/* Hero — orange carries the identity here. White on orange passes contrast
+   only at large sizes, so the heading and lede are both large/bold. */
 .hero {
-  background: linear-gradient(160deg, var(--slate) 0%, var(--slate-pressed) 100%);
+  background: linear-gradient(150deg, var(--orange) 0%, var(--orange-hover) 55%, var(--orange-pressed) 100%);
   color: #fff;
   padding: 5.5rem 0 5rem;
 }
@@ -138,30 +125,33 @@ a:hover { color: var(--orange-hover); }
   max-width: 48rem;
 }
 .hero h1::before {
-  /* gold as a fill, never text */
   content: "";
   display: block;
   width: 56px;
   height: 5px;
   border-radius: 3px;
-  background: var(--gold);
+  background: var(--cream);
   margin-bottom: 1.5rem;
 }
-.hero p { margin-top: 1.25rem; font-size: 1.25rem; line-height: 1.6; max-width: 42rem; color: rgba(255, 255, 255, 0.92); }
+.hero p { margin-top: 1.25rem; font-size: 1.3rem; font-weight: 700; line-height: 1.55; max-width: 42rem; color: #fff; }
 .hero .actions { margin-top: 2.25rem; display: flex; gap: 0.85rem; flex-wrap: wrap; }
-/* Never place orange on slate — hero primary button is white with slate text */
+/* Primary button reversed to white so it reads on the orange ground */
 .hero .actions .btn { background: #fff; color: var(--slate); }
-.hero .actions .btn:hover { background: var(--cream); color: var(--slate); }
+.hero .actions .btn:hover { background: var(--cream); color: var(--slate); filter: none; }
 .hero .actions .btn-outline {
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.55);
+  border: 2px solid rgba(255, 255, 255, 0.65);
   color: #fff;
   box-shadow: none;
 }
-.hero .actions .btn-outline:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+.hero .actions .btn-outline:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff; filter: none; }
 
 /* Page title band for interior pages: bold orange title on cream */
-.page-title { background: var(--cream); padding: 3.25rem 0; border-bottom: 1px solid var(--light-gray); }
+.page-title {
+  background: linear-gradient(150deg, var(--cream) 0%, var(--orange-tint) 100%);
+  padding: 3.25rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
 .page-title h1 {
   color: var(--orange);
   font-size: clamp(1.7rem, 3.5vw, 2.2rem);
@@ -172,13 +162,14 @@ a:hover { color: var(--orange-hover); }
 
 /* Section bars: bold white on a solid slate band, normal case */
 .section-bar {
-  background: var(--slate);
+  background: linear-gradient(135deg, var(--slate) 0%, var(--slate-pressed) 100%);
   color: #fff;
   font-weight: 700;
   font-size: 1.25rem;
   padding: 0.6rem 1.15rem;
   margin: 2.75rem 0 1.4rem;
   border-radius: 6px;
+  border-left: 5px solid var(--gold);
 }
 section.block { padding: 1rem 0 2rem; }
 
@@ -203,10 +194,10 @@ section.block > p { max-width: 48rem; }
 }
 .stat-card .number { font-size: 2.5rem; font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; }
 .stat-card .label { font-size: 0.95rem; margin-top: 0.45rem; opacity: 0.94; }
-.stat-card.slate { background: var(--slate); }
-.stat-card.orange { background: var(--orange); }
-.stat-card.gold { background: var(--gold); }
-.stat-card.charcoal { background: var(--charcoal); }
+.stat-card.slate { background: linear-gradient(150deg, var(--slate) 0%, var(--slate-pressed) 100%); }
+.stat-card.orange { background: linear-gradient(150deg, var(--orange) 0%, var(--orange-pressed) 100%); }
+.stat-card.gold { background: linear-gradient(150deg, var(--gold) 0%, #99742D 100%); }
+.stat-card.charcoal { background: linear-gradient(150deg, var(--charcoal) 0%, #1a1a1a 100%); }
 
 /* Cards */
 .card-grid {
@@ -222,6 +213,17 @@ section.block > p { max-width: 48rem; }
   padding: 1.6rem 1.5rem;
   box-shadow: var(--shadow-sm);
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--orange), var(--gold));
 }
 .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .card h3 { color: var(--slate); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
@@ -256,7 +258,6 @@ blockquote footer {
   position: relative;
 }
 .timeline li::before {
-  /* gold marker dot — gold as a fill */
   content: "";
   position: absolute;
   left: -8.5px;
@@ -264,7 +265,7 @@ blockquote footer {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--gold);
+  background: linear-gradient(135deg, var(--orange), var(--orange-pressed));
   border: 3px solid #fff;
   box-shadow: 0 0 0 1px var(--light-gray);
 }
@@ -280,10 +281,10 @@ blockquote footer {
   margin: 1.4rem 0;
 }
 .person {
-  background: var(--slate-tint);
+  background: linear-gradient(150deg, var(--slate-tint) 0%, var(--orange-tint) 100%);
   border-radius: var(--radius);
   padding: 1.25rem 1.4rem;
-  border-left: 4px solid var(--slate);
+  border-left: 4px solid var(--orange);
 }
 .person .name { font-weight: 700; color: var(--slate); font-size: 1.08rem; }
 .person .role { color: var(--charcoal); font-size: 0.95rem; }
@@ -337,15 +338,22 @@ th { background: var(--slate); color: #fff; font-weight: 700; }
 /* Gold rule divider (gold as a fill, never text) */
 hr.gold-rule {
   border: none;
-  height: 3px;
-  width: 72px;
+  height: 4px;
+  width: 96px;
   border-radius: 2px;
-  background: var(--gold);
+  background: linear-gradient(90deg, var(--orange), var(--gold));
   margin: 3rem 0 2.5rem;
 }
 
 /* Footer: charcoal dark panel */
-.site-footer { background: var(--charcoal); color: #fff; margin-top: 4rem; padding: 3rem 0 2.5rem; }
+.site-footer {
+  background: linear-gradient(180deg, var(--charcoal) 0%, #1f1f1f 100%);
+  color: #fff;
+  margin-top: 4rem;
+  padding: 3rem 0 2.5rem;
+  border-top: 4px solid var(--orange);
+  border-image: linear-gradient(90deg, var(--orange), var(--gold)) 1;
+}
 .site-footer .cols { display: flex; flex-wrap: wrap; gap: 2.5rem 3.5rem; justify-content: space-between; }
 .site-footer .acronym { font-weight: 700; letter-spacing: 0.18em; font-size: 1.25rem; }
 .site-footer p { font-size: 0.95rem; max-width: 26rem; margin-top: 0.5rem; color: rgba(255, 255, 255, 0.85); }
@@ -369,6 +377,7 @@ hr.gold-rule {
   .hero { padding: 3.75rem 0 3.5rem; }
   .site-header { position: static; }
   .site-header .container { flex-direction: column; align-items: flex-start; }
+  .wordmark img { height: 40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
