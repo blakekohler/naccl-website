@@ -2,23 +2,26 @@
    Gold is never text. Orange is display only; #BE5900 is the text-safe
    variant for links and small text. Never orange on slate, never gold on white
    as text pairings. */
+/* ALT PALETTE PREVIEW — teal #009999 / navy #0A3055 / coral #FD8D65.
+   Token names are kept from the brand palette so the rest of the sheet
+   maps automatically: orange→teal, slate→navy, gold→coral. */
 :root {
-  --orange: #C65D00;
-  --orange-text: #BE5900;
-  --orange-hover: #AE5200;
-  --orange-pressed: #9A4900;
-  --orange-tint: #F6E7D9;
-  --slate: #2E4A62;
-  --slate-hover: #284156;
-  --slate-pressed: #243A4C;
-  --slate-tint: #E0E4E7;
-  --gold: #C4953A;
-  --gold-deep: #99742D;
-  --gold-tint: #F6EFE1;
+  --orange: #009999;
+  --orange-text: #007A7A;
+  --orange-hover: #008080;
+  --orange-pressed: #006666;
+  --orange-tint: #D9F0F0;
+  --slate: #0A3055;
+  --slate-hover: #092B4C;
+  --slate-pressed: #072340;
+  --slate-tint: #DCE6EF;
+  --gold: #FD8D65;
+  --gold-deep: #E97C55;
+  --gold-tint: #FEE9E0;
   --charcoal: #2D2D2D;
-  --light-gray: #E0DEDA;
-  --cream: #FDF6ED;
-  --focus: #ABB7C0;
+  --light-gray: #DDE4E4;
+  --cream: #F5FAFA;
+  --focus: #9FB6C6;
 
   --radius: 16px;
   --radius-sm: 10px;
@@ -159,16 +162,16 @@ img { max-width: 100%; }
   border-radius: 999px;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(154, 73, 0, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 102, 102, 0.25);
   transition: background-position 0.35s var(--ease), transform 0.2s var(--ease), box-shadow 0.25s var(--ease);
 }
 .btn:hover {
   background-position: 100% 100%;
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(154, 73, 0, 0.3);
+  box-shadow: 0 10px 24px rgba(0, 102, 102, 0.3);
 }
-.btn:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(154, 73, 0, 0.25); }
+.btn:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(0, 102, 102, 0.25); }
 .btn-slate { background: var(--grad-slate); background-size: 150% 150%; box-shadow: 0 2px 8px rgba(36, 58, 76, 0.25); }
 .btn-slate:hover { box-shadow: 0 10px 24px rgba(36, 58, 76, 0.3); }
 
@@ -189,10 +192,10 @@ img { max-width: 100%; }
 .hero {
   position: relative;
   background:
-    radial-gradient(56rem 30rem at 82% -12%, rgba(253, 246, 237, 0.28), transparent 55%),
-    radial-gradient(44rem 28rem at 108% 88%, rgba(196, 149, 58, 0.45), transparent 55%),
-    radial-gradient(40rem 26rem at -8% 108%, rgba(45, 45, 45, 0.30), transparent 52%),
-    linear-gradient(150deg, var(--orange) 0%, var(--orange-hover) 55%, var(--orange-pressed) 100%);
+    radial-gradient(56rem 30rem at 82% -12%, rgba(255, 255, 255, 0.20), transparent 55%),
+    radial-gradient(44rem 28rem at 108% 88%, rgba(253, 141, 101, 0.35), transparent 55%),
+    radial-gradient(40rem 26rem at -8% 108%, rgba(7, 35, 64, 0.45), transparent 52%),
+    linear-gradient(150deg, var(--orange) 0%, #067d8a 45%, var(--slate) 100%);
   color: #fff;
   padding: 7.5rem 0 9rem;
   overflow: hidden;
@@ -271,9 +274,14 @@ img { max-width: 100%; }
   position: absolute;
   inset: 0;
   background: url("../img/photos/city.jpg") center/cover no-repeat;
-  opacity: 0.09;
+  opacity: 0.08;
   mix-blend-mode: luminosity;
   pointer-events: none;
+}
+.band-dark {
+  background:
+    radial-gradient(50rem 26rem at 90% -20%, rgba(253, 141, 101, 0.20), transparent 55%),
+    linear-gradient(150deg, #0d5f74 0%, var(--slate) 55%, var(--slate-pressed) 100%);
 }
 .band-dark .container { position: relative; z-index: 1; }
 .band-dark .section-bar { color: #fff; }
@@ -319,7 +327,7 @@ p + p { margin-top: 0.9rem; }
 /* Page title band for interior pages */
 .page-title {
   background:
-    radial-gradient(44rem 22rem at 92% -10%, rgba(198, 93, 0, 0.12), transparent 60%),
+    radial-gradient(44rem 22rem at 92% -10%, rgba(0, 153, 153, 0.12), transparent 60%),
     linear-gradient(150deg, var(--cream) 0%, var(--orange-tint) 100%);
   padding: 4rem 0;
   border-bottom: 1px solid var(--light-gray);
@@ -356,8 +364,8 @@ p + p { margin-top: 0.9rem; }
   padding: 2rem 1.6rem;
   border-radius: 20px;
   overflow: hidden;
-  background: linear-gradient(145deg, #3A5B77 0%, var(--slate) 45%, var(--slate-pressed) 100%);
-  box-shadow: 0 18px 40px -14px rgba(46, 74, 98, 0.55);
+  background: linear-gradient(145deg, #14497D 0%, var(--slate) 45%, var(--slate-pressed) 100%);
+  box-shadow: 0 18px 40px -14px rgba(10, 48, 85, 0.55);
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 .stat-card .icon {
@@ -500,7 +508,7 @@ blockquote footer::before {
   border-radius: 50%;
   background: var(--grad-orange);
   border: 3px solid #fff;
-  box-shadow: 0 2px 6px rgba(154, 73, 0, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 102, 102, 0.25);
 }
 .timeline li:last-child { padding-bottom: 0.25rem; }
 .timeline .when { font-weight: 700; color: var(--orange-text); font-size: 0.97rem; }
@@ -630,7 +638,7 @@ hr.gold-rule {
    ============================================================ */
 .site-footer {
   background:
-    radial-gradient(50rem 24rem at 92% -30%, rgba(198, 93, 0, 0.14), transparent 55%),
+    radial-gradient(50rem 24rem at 92% -30%, rgba(0, 153, 153, 0.14), transparent 55%),
     linear-gradient(180deg, var(--charcoal) 0%, #1e1e1e 100%);
   color: #fff;
   margin-top: 4.5rem;
