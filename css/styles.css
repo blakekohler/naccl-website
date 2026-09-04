@@ -210,39 +210,6 @@ img { max-width: 100%; }
   mix-blend-mode: luminosity;
   pointer-events: none;
 }
-/* animated house-network motif, echoing the logo */
-.hero-motif {
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: min(28vw, 400px);
-  pointer-events: none;
-}
-.motif-house { stroke: rgba(255, 255, 255, 0.75); }
-.motif-edges { stroke: rgba(255, 255, 255, 0.4); }
-.motif-draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: motifDraw 1.4s var(--ease-out) forwards;
-}
-.motif-node {
-  fill: rgba(255, 255, 255, 0.85);
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  transform: scale(0);
-  animation: motifPop 0.45s var(--ease-out) forwards;
-}
-.motif-node.gold { fill: var(--gold); }
-@keyframes motifDraw { to { stroke-dashoffset: 0; } }
-@keyframes motifPop { to { opacity: 1; transform: scale(1); } }
-@media (max-width: 1050px) { .hero-motif { display: none; } }
-@media (prefers-reduced-motion: reduce) {
-  .motif-draw { stroke-dashoffset: 0; animation: none; }
-  .motif-node { opacity: 1; transform: scale(1); animation: none; }
-}
-
 .hero .container { position: relative; z-index: 1; }
 .hero h1 {
   font-size: clamp(2.3rem, 5.2vw, 3.7rem);
