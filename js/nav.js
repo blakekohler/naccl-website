@@ -20,6 +20,18 @@ if (heroVideos.length && (reducedMotion || window.matchMedia('(max-width: 700px)
   const FADE = 1.1;
   let [active, standby] = heroVideos;
   standby.pause();
+  // Safari won't reliably honor the autoplay attribute: it shows a play
+  // glyph while deciding, and paints the first frame before blend-mode
+  // compositing applies. Keep the video hidden until frames are actually
+  // rendering, start playback from script, and drop both copies (leaving
+  // the gradient) if playback is refused.
+  const first = active;
+  first.style.opacity = 0;
+  first.addEventListener('playing', () => { first.style.opacity = ''; }, { once: true });
+  heroVideos.forEach((v) => { v.muted = true; v.defaultMuted = true; });
+  first.play()
+    .then(() => { first.style.opacity = ''; })
+    .catch(() => heroVideos.forEach((v) => v.remove()));
   setInterval(() => {
     if (!active.duration || active.paused) return;
     if (active.currentTime > active.duration - FADE - 0.2) {
