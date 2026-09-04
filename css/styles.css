@@ -195,8 +195,8 @@ img { max-width: 100%; }
 .hero {
   position: relative;
   background:
-    radial-gradient(54rem 36rem at 104% 104%, rgba(253, 141, 101, 0.8), transparent 62%),
-    radial-gradient(56rem 30rem at 82% -12%, rgba(255, 255, 255, 0.16), transparent 55%),
+    radial-gradient(74rem 50rem at 110% 110%, rgba(253, 141, 101, 0.95) 0%, rgba(253, 141, 101, 0.45) 42%, transparent 68%),
+    radial-gradient(56rem 30rem at 82% -12%, rgba(255, 255, 255, 0.14), transparent 55%),
     linear-gradient(150deg, var(--orange) 0%, #067d8a 38%, var(--slate) 92%);
   color: #fff;
   padding: 7.5rem 0 9rem;
