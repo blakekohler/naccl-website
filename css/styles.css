@@ -33,7 +33,7 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   --grad-brand: linear-gradient(90deg, var(--orange), var(--coral));
-  --grad-orange: linear-gradient(135deg, var(--orange) 0%, var(--orange-pressed) 100%);
+  --grad-orange: linear-gradient(135deg, var(--orange) 0%, var(--coral-deep) 100%);
   --grad-slate: linear-gradient(135deg, var(--teal) 0%, var(--slate) 60%, var(--slate-pressed) 100%);
 }
 
@@ -372,6 +372,11 @@ p + p { margin-top: 0.9rem; }
   font-size: clamp(1.8rem, 3.8vw, 2.5rem);
   font-weight: 700;
   letter-spacing: -0.015em;
+  width: fit-content;
+  background: var(--grad-orange);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .page-title h1::after {
   content: "";
@@ -554,7 +559,7 @@ p + p { margin-top: 0.9rem; }
 }
 .map-legend .sw.t0 { background: repeating-linear-gradient(45deg, #EFECE7 0 3px, #D8D3CB 3px 4.5px); }
 .map-legend .sw.t1 { background: linear-gradient(135deg, #17859B, #0A5260); }
-.map-legend .sw.t2 { background: linear-gradient(135deg, #D96E0E, #9A4900); }
+.map-legend .sw.t2 { background: linear-gradient(135deg, #C65D00, #E97C55); }
 .map-legend .sw.t3 { background: linear-gradient(135deg, #14497D, #072340); }
 .map-legend .sw.pin { background: var(--coral); border-radius: 50%; width: 14px; height: 14px; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(45, 45, 45, 0.15); }
 
