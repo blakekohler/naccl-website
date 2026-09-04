@@ -203,7 +203,7 @@ img { max-width: 100%; }
   position: absolute;
   inset: 0;
   background: url("../img/photos/neighborhood.jpg") center/cover no-repeat;
-  opacity: 0.14;
+  opacity: 0.09;
   mix-blend-mode: luminosity;
   pointer-events: none;
 }
