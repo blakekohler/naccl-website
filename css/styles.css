@@ -811,6 +811,16 @@ main:has(.band-dark:last-child) + .site-footer { margin-top: 0; }
   .hero { padding: 4.5rem 0 6.5rem; }
   .band { padding: 3.25rem 0; }
   .wordmark img { height: 38px; }
+  /* the video is skipped on small screens — use its poster frame instead */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("../img/photos/hero-poster.jpg") center/cover no-repeat;
+    opacity: 0.18;
+    mix-blend-mode: luminosity;
+    pointer-events: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
