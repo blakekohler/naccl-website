@@ -107,18 +107,28 @@ if (mapFigure) {
     tip.style.left = `${x}px`;
     tip.style.top = `${y}px`;
   };
+  const showPins = (name) => {
+    mapFigure.querySelectorAll('.state-pins.show').forEach((g) => {
+      if (g.dataset.state !== name) g.classList.remove('show');
+    });
+    if (!name) return;
+    const g = mapFigure.querySelector(`.state-pins[data-state="${name}"]`);
+    if (g) g.classList.add('show');
+  };
   mapFigure.addEventListener('pointermove', (e) => {
     const state = e.target.closest('.map-state');
-    if (!state) { tip.hidden = true; return; }
+    if (!state) { tip.hidden = true; showPins(null); return; }
     const r = mapFigure.getBoundingClientRect();
     show(state, e.clientX - r.left + 16, e.clientY - r.top - 12);
+    showPins(state.dataset.name);
   });
-  mapFigure.addEventListener('pointerleave', () => { tip.hidden = true; });
+  mapFigure.addEventListener('pointerleave', () => { tip.hidden = true; showPins(null); });
   mapFigure.addEventListener('focusin', (e) => {
     const state = e.target.closest('.map-state');
     if (!state) return;
     const b = state.getBBox();
     show(state, b.x + b.width / 2, b.y - 8);
+    showPins(state.dataset.name);
   });
-  mapFigure.addEventListener('focusout', () => { tip.hidden = true; });
+  mapFigure.addEventListener('focusout', () => { tip.hidden = true; showPins(null); });
 }

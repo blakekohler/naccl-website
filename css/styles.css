@@ -14,6 +14,8 @@
   --slate-pressed: #072340;
   --slate-tint: #DCE6EF;
   --teal: #0E6B7C;
+  --coral: #FD8D65;
+  --coral-deep: #E97C55;
   --gold: #C4953A;
   --gold-deep: #99742D;
   --gold-tint: #F6EFE1;
@@ -30,7 +32,7 @@
   --ease: cubic-bezier(0.25, 0.6, 0.35, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-  --grad-brand: linear-gradient(90deg, var(--orange), var(--gold));
+  --grad-brand: linear-gradient(90deg, var(--orange), var(--coral));
   --grad-orange: linear-gradient(135deg, var(--orange) 0%, var(--orange-pressed) 100%);
   --grad-slate: linear-gradient(135deg, var(--teal) 0%, var(--slate) 60%, var(--slate-pressed) 100%);
 }
@@ -327,7 +329,7 @@ section.block { padding: 1rem 0 2.25rem; }
 .band section.block { padding: 0; }
 
 /* Subheads: bold orange */
-h3.subhead { color: var(--orange); font-weight: 700; font-size: 1.2rem; margin: 1.85rem 0 0.5rem; }
+h3.subhead { color: var(--teal); font-weight: 700; font-size: 1.2rem; margin: 1.85rem 0 0.5rem; }
 
 p + p { margin-top: 0.9rem; }
 
@@ -473,9 +475,19 @@ p + p { margin-top: 0.9rem; }
   outline: none;
 }
 .map-state.t0 { fill: url(#hatch); }
-.map-state.t1 { fill: var(--gold); }
+.map-state.t1 { fill: var(--teal); }
 .map-state.t2 { fill: var(--orange); }
 .map-state.t3 { fill: var(--slate); }
+
+/* per-CoC location pins, revealed on state hover/focus */
+.state-pins { pointer-events: none; opacity: 0; transition: opacity 0.25s var(--ease); }
+.state-pins.show { opacity: 1; }
+.state-pins circle {
+  fill: var(--coral);
+  stroke: #fff;
+  stroke-width: 1.6;
+  filter: drop-shadow(0 1px 3px rgba(45, 45, 45, 0.45));
+}
 .map-state:hover,
 .map-state:focus-visible { filter: brightness(1.15) drop-shadow(0 3px 8px rgba(45, 45, 45, 0.3)); stroke-width: 1.75; }
 /* states cascade in when the map scrolls into view */
@@ -514,9 +526,10 @@ p + p { margin-top: 0.9rem; }
   border: 1px solid rgba(45, 45, 45, 0.12);
 }
 .map-legend .sw.t0 { background: repeating-linear-gradient(45deg, #EFECE7 0 3px, #D8D3CB 3px 4.5px); }
-.map-legend .sw.t1 { background: var(--gold); }
+.map-legend .sw.t1 { background: var(--teal); }
 .map-legend .sw.t2 { background: var(--orange); }
 .map-legend .sw.t3 { background: var(--slate); }
+.map-legend .sw.pin { background: var(--coral); border-radius: 50%; width: 14px; height: 14px; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(45, 45, 45, 0.15); }
 
 /* ============================================================
    Pull quotes — warm gradient panels
@@ -524,7 +537,7 @@ p + p { margin-top: 0.9rem; }
 blockquote {
   position: relative;
   background: linear-gradient(150deg, var(--cream) 0%, var(--gold-tint) 100%);
-  border-left: 4px solid var(--gold);
+  border-left: 4px solid var(--teal);
   border-radius: var(--radius);
   padding: 1.6rem 1.9rem 1.6rem 2rem;
   margin: 1.5rem 0;
@@ -562,7 +575,7 @@ blockquote footer::before {
   bottom: 0.5rem;
   width: 3px;
   border-radius: 2px;
-  background: linear-gradient(180deg, var(--orange), var(--gold));
+  background: linear-gradient(180deg, var(--teal), var(--coral));
 }
 .timeline li { padding: 0 0 2rem 1.75rem; position: relative; }
 .timeline li::before {
@@ -574,12 +587,12 @@ blockquote footer::before {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--grad-orange);
+  background: linear-gradient(135deg, var(--coral), var(--coral-deep));
   border: 3px solid #fff;
-  box-shadow: 0 2px 6px rgba(154, 73, 0, 0.25);
+  box-shadow: 0 2px 6px rgba(233, 124, 85, 0.4);
 }
 .timeline li:last-child { padding-bottom: 0.25rem; }
-.timeline .when { font-weight: 700; color: var(--orange-text); font-size: 0.97rem; }
+.timeline .when { font-weight: 700; color: var(--teal); font-size: 0.97rem; }
 .timeline h3 { color: var(--slate); font-size: 1.15rem; margin: 0.1rem 0 0.25rem; letter-spacing: -0.01em; }
 
 /* ============================================================
