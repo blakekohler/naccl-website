@@ -1,0 +1,263 @@
+/* NACCL brand palette — per NACCL Brand Specification 8-24-26.
+   Gold is never text. Orange is display only; #BE5900 is the text-safe
+   variant for links and small text. */
+:root {
+  --orange: #C65D00;
+  --orange-text: #BE5900;
+  --orange-hover: #AE5200;
+  --orange-pressed: #9A4900;
+  --orange-tint: #F6E7D9;
+  --slate: #2E4A62;
+  --slate-hover: #284156;
+  --slate-pressed: #243A4C;
+  --slate-tint: #E0E4E7;
+  --gold: #C4953A;
+  --gold-tint: #F6EFE1;
+  --charcoal: #2D2D2D;
+  --light-gray: #E0DEDA;
+  --cream: #FDF6ED;
+  --focus: #ABB7C0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Carlito, Calibri, sans-serif;
+  color: var(--charcoal);
+  background: #fff;
+  line-height: 1.6;
+  font-size: 1.0625rem;
+}
+
+a { color: var(--orange-text); }
+a:hover { color: var(--orange-hover); }
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.container { max-width: 1040px; margin: 0 auto; padding: 0 1.25rem; }
+
+/* Header and wordmark: NACCL in bold slate, letter-spaced, full name
+   beneath in charcoal at roughly half the size. */
+.site-header {
+  border-bottom: 4px solid var(--orange);
+  padding: 1.25rem 0;
+  background: #fff;
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.wordmark { text-decoration: none; display: block; }
+.wordmark .acronym {
+  color: var(--slate);
+  font-weight: 700;
+  font-size: 1.75rem;
+  letter-spacing: 0.18em;
+  line-height: 1.1;
+}
+.wordmark .fullname {
+  color: var(--charcoal);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.site-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
+.site-nav a {
+  color: var(--slate);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.25rem 0;
+}
+.site-nav a:hover { color: var(--slate-hover); text-decoration: underline; }
+.site-nav a[aria-current="page"] { color: var(--orange-text); border-bottom: 2px solid var(--orange); }
+.site-nav .btn { margin-left: 0.5rem; }
+
+/* Buttons — orange passes contrast at large/UI sizes only */
+.btn {
+  display: inline-block;
+  background: var(--orange);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:hover { background: var(--orange-hover); color: #fff; }
+.btn:active { background: var(--orange-pressed); }
+.btn-slate { background: var(--slate); }
+.btn-slate:hover { background: var(--slate-hover); }
+.btn-slate:active { background: var(--slate-pressed); }
+
+/* Hero */
+.hero { background: var(--slate); color: #fff; padding: 4rem 0; }
+.hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; max-width: 46rem; }
+.hero p { margin-top: 1rem; font-size: 1.2rem; max-width: 42rem; }
+.hero .actions { margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.hero .actions .btn { background: var(--orange); }
+.hero .actions .btn-outline {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+}
+.hero .actions .btn-outline:hover { background: rgba(255, 255, 255, 0.12); }
+
+/* Page title band for interior pages: bold orange title on cream */
+.page-title { background: var(--cream); padding: 2.5rem 0; border-bottom: 1px solid var(--light-gray); }
+.page-title h1 { color: var(--orange); font-size: 2rem; font-weight: 700; }
+.page-title p { margin-top: 0.5rem; max-width: 44rem; }
+
+/* Section bars: bold white on a solid slate band, normal case */
+.section-bar {
+  background: var(--slate);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem;
+  margin: 2.5rem 0 1.25rem;
+  border-radius: 2px;
+}
+section.block { padding: 1rem 0 2rem; }
+
+/* Subheads: bold orange */
+h3.subhead { color: var(--orange); font-weight: 700; font-size: 1.15rem; margin: 1.5rem 0 0.5rem; }
+
+p + p { margin-top: 0.85rem; }
+
+/* Statistic cards: solid fills in slate, orange, gold, charcoal with white numerals */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.stat-card { color: #fff; padding: 1.5rem 1.25rem; border-radius: 4px; }
+.stat-card .number { font-size: 2.2rem; font-weight: 700; line-height: 1.1; }
+.stat-card .label { font-size: 0.95rem; margin-top: 0.35rem; }
+.stat-card.slate { background: var(--slate); }
+.stat-card.orange { background: var(--orange); }
+.stat-card.gold { background: var(--gold); }
+.stat-card.charcoal { background: var(--charcoal); }
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin: 1.25rem 0;
+}
+.card {
+  background: var(--cream);
+  border: 1px solid var(--light-gray);
+  border-radius: 4px;
+  padding: 1.4rem;
+}
+.card h3 { color: var(--slate); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.card p { font-size: 0.98rem; }
+.card.plain { background: #fff; }
+
+/* Pull quotes on warm background panels */
+blockquote {
+  background: var(--cream);
+  border-left: 4px solid var(--gold);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+  font-style: italic;
+}
+blockquote footer {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--slate);
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+}
+
+/* Timeline list */
+.timeline { list-style: none; margin: 1rem 0; }
+.timeline li {
+  border-left: 3px solid var(--gold);
+  padding: 0 0 1.4rem 1.25rem;
+  position: relative;
+}
+.timeline li:last-child { padding-bottom: 0.25rem; }
+.timeline .when { font-weight: 700; color: var(--orange-text); }
+.timeline h3 { color: var(--slate); font-size: 1.05rem; }
+
+/* People */
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+.person {
+  background: var(--slate-tint);
+  border-radius: 4px;
+  padding: 1.1rem 1.25rem;
+}
+.person .name { font-weight: 700; color: var(--slate); font-size: 1.05rem; }
+.person .role { color: var(--charcoal); font-size: 0.95rem; }
+.person .coc { color: var(--charcoal); font-size: 0.9rem; margin-top: 0.2rem; }
+
+/* Definition-style FAQ */
+.faq h3 { color: var(--slate); font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 0.4rem; }
+
+/* Simple content lists */
+main ul.content-list { margin: 0.75rem 0 0.75rem 1.4rem; }
+main ul.content-list li { margin-bottom: 0.4rem; }
+
+/* Forms */
+form.stacked { max-width: 34rem; margin: 1.5rem 0; }
+form.stacked label { display: block; font-weight: 700; color: var(--slate); margin: 1rem 0 0.3rem; }
+form.stacked input,
+form.stacked select,
+form.stacked textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--light-gray);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--charcoal);
+}
+form.stacked input:focus,
+form.stacked select:focus,
+form.stacked textarea:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 0;
+  border-color: var(--slate);
+}
+fieldset { border: 1px solid var(--light-gray); border-radius: 4px; padding: 0.75rem 1rem 1rem; margin-top: 1rem; }
+legend { font-weight: 700; color: var(--slate); padding: 0 0.4rem; }
+fieldset label { font-weight: 400 !important; color: var(--charcoal) !important; margin: 0.4rem 0 0 !important; }
+fieldset input[type="checkbox"] { width: auto; margin-right: 0.5rem; }
+form.stacked .btn { margin-top: 1.5rem; }
+
+/* Tables */
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+th, td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--light-gray); }
+th { background: var(--slate); color: #fff; font-weight: 700; }
+
+/* Gold rule divider (gold as a fill, never text) */
+hr.gold-rule { border: none; border-top: 3px solid var(--gold); margin: 2.5rem 0; }
+
+/* Footer: charcoal dark panel */
+.site-footer { background: var(--charcoal); color: #fff; margin-top: 3.5rem; padding: 2.5rem 0; }
+.site-footer .cols { display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: space-between; }
+.site-footer .acronym { font-weight: 700; letter-spacing: 0.18em; font-size: 1.25rem; }
+.site-footer p { font-size: 0.95rem; max-width: 26rem; margin-top: 0.4rem; }
+.site-footer nav a { display: block; color: #fff; font-size: 0.95rem; margin-bottom: 0.4rem; }
+.site-footer .legal { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #4a4a4a; font-size: 0.85rem; }
+
+@media (max-width: 700px) {
+  .hero h1 { font-size: 1.9rem; }
+  .page-title h1 { font-size: 1.6rem; }
+  .site-header .container { flex-direction: column; align-items: flex-start; }
+}

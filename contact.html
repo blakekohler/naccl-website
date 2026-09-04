@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — NACCL</title>
+  <meta name="description" content="Have questions about NACCL? Get in touch.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a class="wordmark" href="index.html">
+      <span class="acronym">NACCL</span>
+      <span class="fullname">National Association of Continuum of Care Leaders</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About &amp; FAQs</a>
+      <a href="membership.html">Membership</a>
+      <a href="resources.html">Resources</a>
+      <a href="advocacy.html">Advocacy</a>
+      <a href="policy.html">Policy Desk</a>
+      <a href="events.html">Events</a>
+      <a class="btn" href="connect.html">Stay Connected</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-title">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p>Have questions about NACCL? We'd love to hear from you.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <form class="stacked" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
+      <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" placeholder="What's this about?">
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
+
+      <button type="submit" class="btn">Send message</button>
+    </form>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <div class="acronym">NACCL</div>
+        <p>A national professional association for Continuums of Care, built and governed by CoC leaders. NACCL is organized as a 501(c)(6) professional association; Internal Revenue Service recognition is pending.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="about.html">About &amp; FAQs</a>
+        <a href="membership.html">Membership</a>
+        <a href="resources.html">Resources</a>
+        <a href="advocacy.html">Advocacy</a>
+        <a href="policy.html">Policy Desk</a>
+        <a href="events.html">Events</a>
+      </nav>
+      <nav aria-label="Connect">
+        <a href="connect.html">Join the interest list</a>
+        <a href="contact.html">Contact us</a>
+        <a href="share.html">Share a resource</a>
+      </nav>
+    </div>
+    <div class="legal">&copy; 2026 National Association of Continuum of Care Leaders</div>
+  </div>
+</footer>
+
+</body>
+</html>
