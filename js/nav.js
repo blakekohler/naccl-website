@@ -11,88 +11,27 @@ if (toggle && nav) {
   });
 }
 
-// Background video: skip entirely on small screens and for reduced motion
-const heroVideo = document.querySelector('.hero-video');
-if (heroVideo && (reducedMotion || window.matchMedia('(max-width: 700px)').matches)) {
-  heroVideo.remove();
-} else if (heroVideo) {
-  // restart just before the file ends — avoids the flicker native loop causes
-  heroVideo.addEventListener('timeupdate', () => {
-    if (heroVideo.duration && heroVideo.currentTime > heroVideo.duration - 0.35) {
-      heroVideo.currentTime = 0.05;
+// Background video: two staggered copies crossfade for a seamless loop.
+// Skipped entirely on small screens and for reduced motion.
+const heroVideos = document.querySelectorAll('.hero-video');
+if (heroVideos.length && (reducedMotion || window.matchMedia('(max-width: 700px)').matches)) {
+  heroVideos.forEach((v) => v.remove());
+} else if (heroVideos.length === 2) {
+  const FADE = 1.1;
+  let [active, standby] = heroVideos;
+  standby.pause();
+  setInterval(() => {
+    if (!active.duration || active.paused) return;
+    if (active.currentTime > active.duration - FADE - 0.2) {
+      standby.currentTime = 0.05;
+      standby.play().catch(() => {});
+      standby.style.opacity = 0.18;
+      active.style.opacity = 0;
+      const old = active;
+      setTimeout(() => old.pause(), FADE * 1000 + 300);
+      [active, standby] = [standby, active];
     }
-  });
-}
-
-// Ambient network animation — nodes drifting and connecting over the hero
-const net = document.querySelector('.hero-net');
-if (net && !reducedMotion && window.innerWidth > 700) {
-  const ctx = net.getContext('2d');
-  const heroEl = net.parentElement;
-  const COUNT = 60;
-  const LINK = 150;
-  let w, h, nodes = [], visible = true;
-
-  const resize = () => {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = heroEl.clientWidth;
-    h = heroEl.clientHeight;
-    net.width = w * dpr;
-    net.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  };
-
-  const spawn = () => {
-    nodes = Array.from({ length: COUNT }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.16,
-      vy: (Math.random() - 0.5) * 0.16,
-      r: 1.5 + Math.random() * 1.5,
-      gold: Math.random() < 0.18,
-    }));
-  };
-
-  const tick = () => {
-    if (!visible || document.hidden) { requestAnimationFrame(tick); return; }
-    ctx.clearRect(0, 0, w, h);
-    for (const n of nodes) {
-      n.x += n.vx;
-      n.y += n.vy;
-      if (n.x < -20) n.x = w + 20; else if (n.x > w + 20) n.x = -20;
-      if (n.y < -20) n.y = h + 20; else if (n.y > h + 20) n.y = -20;
-    }
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const dx = nodes[i].x - nodes[j].x;
-        const dy = nodes[i].y - nodes[j].y;
-        const d = Math.hypot(dx, dy);
-        if (d < LINK) {
-          ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - d / LINK) * 0.35})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-    for (const n of nodes) {
-      ctx.fillStyle = n.gold ? 'rgba(212, 173, 106, 0.9)' : 'rgba(255, 255, 255, 0.85)';
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    requestAnimationFrame(tick);
-  };
-
-  resize();
-  spawn();
-  window.addEventListener('resize', () => { resize(); }, { passive: true });
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }).observe(heroEl);
-  }
-  requestAnimationFrame(tick);
+  }, 250);
 }
 
 // Compact header once the page scrolls
@@ -120,7 +59,7 @@ document.querySelectorAll('.person').forEach((card) => {
 if (!reducedMotion && 'IntersectionObserver' in window) {
   const candidates = document.querySelectorAll(
     '.section-bar, .card, .stat-card, .person, blockquote, .timeline li, h3.subhead, ' +
-    '.band > .container > p, section.block > p, .faq h3 + p, form.stacked'
+    '.band > .container > p, section.block > p, .faq h3 + p, form.stacked, .map-figure'
   );
   const perParent = new Map();
   candidates.forEach((el) => {
@@ -156,4 +95,30 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
   candidates.forEach((el) => observer.observe(el));
+}
+
+// Founding-member map tooltips
+const mapFigure = document.querySelector('.map-figure');
+if (mapFigure) {
+  const tip = mapFigure.querySelector('.map-tip');
+  const show = (state, x, y) => {
+    tip.textContent = `${state.dataset.name} \u2014 ${state.dataset.label}`;
+    tip.hidden = false;
+    tip.style.left = `${x}px`;
+    tip.style.top = `${y}px`;
+  };
+  mapFigure.addEventListener('pointermove', (e) => {
+    const state = e.target.closest('.map-state');
+    if (!state) { tip.hidden = true; return; }
+    const r = mapFigure.getBoundingClientRect();
+    show(state, e.clientX - r.left + 16, e.clientY - r.top - 12);
+  });
+  mapFigure.addEventListener('pointerleave', () => { tip.hidden = true; });
+  mapFigure.addEventListener('focusin', (e) => {
+    const state = e.target.closest('.map-state');
+    if (!state) return;
+    const b = state.getBBox();
+    show(state, b.x + b.width / 2, b.y - 8);
+  });
+  mapFigure.addEventListener('focusout', () => { tip.hidden = true; });
 }

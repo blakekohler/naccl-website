@@ -209,18 +209,9 @@ img { max-width: 100%; }
   opacity: 0.18;
   mix-blend-mode: luminosity;
   pointer-events: none;
+  transition: opacity 1s linear;
 }
-/* ambient network of connecting nodes, blended into the gradient */
-.hero-net {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.35;
-}
-@media (max-width: 700px), (prefers-reduced-motion: reduce) {
-  .hero-net { display: none; }
-}
-
+.hero-video-b { opacity: 0; }
 .hero .container { position: relative; z-index: 1; }
 .hero h1 {
   font-size: clamp(2.3rem, 5.2vw, 3.7rem);
@@ -466,6 +457,66 @@ p + p { margin-top: 0.9rem; }
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: transparent; }
 .card h3 { color: var(--slate); font-size: 1.13rem; font-weight: 700; margin-bottom: 0.55rem; letter-spacing: -0.01em; }
 .card p { font-size: 0.99rem; }
+
+/* ============================================================
+   Founding-member map — four-tier choropleth per the brand
+   data-viz standard, harmonized to the site palette
+   ============================================================ */
+.map-figure { position: relative; margin: 2.25rem 0 0; }
+.map-svg { width: 100%; height: auto; display: block; }
+.map-state {
+  stroke: #fff;
+  stroke-width: 1;
+  cursor: pointer;
+  transition: opacity 0.5s var(--ease-out), filter 0.2s var(--ease);
+  transition-delay: calc(var(--i) * 16ms), 0s;
+  outline: none;
+}
+.map-state.t0 { fill: url(#hatch); }
+.map-state.t1 { fill: var(--gold); }
+.map-state.t2 { fill: var(--orange); }
+.map-state.t3 { fill: var(--slate); }
+.map-state:hover,
+.map-state:focus-visible { filter: brightness(1.15) drop-shadow(0 3px 8px rgba(45, 45, 45, 0.3)); stroke-width: 1.75; }
+/* states cascade in when the map scrolls into view */
+.map-figure.reveal .map-state { opacity: 0; }
+.map-figure.reveal.in-view .map-state { opacity: 1; }
+
+.map-tip {
+  position: absolute;
+  background: var(--charcoal);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+  z-index: 5;
+}
+
+/* horizontal legend on a white ground */
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.7rem;
+  justify-content: center;
+  padding: 1.25rem 0 0;
+  font-size: 0.96rem;
+}
+.map-legend .key { display: flex; align-items: center; gap: 0.5rem; }
+.map-legend .sw {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: inline-block;
+  border: 1px solid rgba(45, 45, 45, 0.12);
+}
+.map-legend .sw.t0 { background: repeating-linear-gradient(45deg, #EFECE7 0 3px, #D8D3CB 3px 4.5px); }
+.map-legend .sw.t1 { background: var(--gold); }
+.map-legend .sw.t2 { background: var(--orange); }
+.map-legend .sw.t3 { background: var(--slate); }
 
 /* ============================================================
    Pull quotes — warm gradient panels
