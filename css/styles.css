@@ -237,15 +237,6 @@ img { max-width: 100%; }
   max-width: 52rem;
   text-wrap: balance;
 }
-.hero h1::before {
-  content: "";
-  display: block;
-  width: 64px;
-  height: 5px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--cream), var(--gold));
-  margin-bottom: 1.75rem;
-}
 .hero p {
   margin-top: 1.4rem;
   font-size: clamp(1.15rem, 2vw, 1.35rem);
@@ -278,7 +269,35 @@ img { max-width: 100%; }
    Full-bleed bands
    ============================================================ */
 .band { padding: 4.5rem 0; }
-.band-cream { background: linear-gradient(180deg, var(--cream) 0%, var(--gold-tint) 100%); }
+.band-cream {
+  position: relative;
+  background: linear-gradient(180deg, var(--cream) 0%, var(--gold-tint) 100%);
+  padding-top: 5.75rem;
+  padding-bottom: 5.75rem;
+}
+/* wavy top edge — flipped on both axes so it doesn't mirror the bottom */
+.band-cream::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 36px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 56' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M0 36C240 58 480 6 720 26C960 46 1200 14 1440 32L1440 56L0 56Z'/%3E%3C/svg%3E") center bottom / 100% 100% no-repeat;
+  transform: scale(-1);
+  pointer-events: none;
+}
+/* tinted bands share the header wave where they meet white */
+.band-cream::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 36px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 56' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M0 36C240 58 480 6 720 26C960 46 1200 14 1440 32L1440 56L0 56Z'/%3E%3C/svg%3E") center bottom / 100% 100% no-repeat;
+  pointer-events: none;
+}
 .band-dark {
   position: relative;
   overflow: hidden;
@@ -296,6 +315,19 @@ img { max-width: 100%; }
   mix-blend-mode: luminosity;
   pointer-events: none;
 }
+/* wavy top edge — flipped so the white sits above, cutting into the dark */
+.band-dark::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 36px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 56' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M0 36C240 58 480 6 720 26C960 46 1200 14 1440 32L1440 56L0 56Z'/%3E%3C/svg%3E") center bottom / 100% 100% no-repeat;
+  transform: scaleY(-1);
+  pointer-events: none;
+}
+.band-dark { padding-top: 5.75rem; }
 .band-dark .container { position: relative; z-index: 1; }
 .band-dark .section-bar { color: #fff; }
 .band-dark .btn { background: #fff; color: var(--slate); }
