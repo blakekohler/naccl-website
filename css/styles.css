@@ -190,15 +190,16 @@ img { max-width: 100%; }
    White on orange passes contrast only at large/bold sizes,
    so the heading and lede are both large and bold.
    ============================================================ */
+/* Coral banner — coral is too light for white text, so the hero
+   reads in navy on a coral gradient */
 .hero {
   position: relative;
   background:
-    radial-gradient(56rem 30rem at 82% -12%, rgba(255, 255, 255, 0.20), transparent 55%),
-    radial-gradient(44rem 28rem at 108% 88%, rgba(253, 141, 101, 0.55), transparent 60%),
-    radial-gradient(30rem 20rem at 8% -10%, rgba(253, 141, 101, 0.25), transparent 55%),
-    radial-gradient(40rem 26rem at -8% 108%, rgba(7, 35, 64, 0.45), transparent 52%),
-    linear-gradient(150deg, var(--orange) 0%, #067d8a 45%, var(--slate) 100%);
-  color: #fff;
+    radial-gradient(56rem 30rem at 82% -12%, rgba(255, 255, 255, 0.35), transparent 55%),
+    radial-gradient(44rem 28rem at 108% 88%, rgba(0, 153, 153, 0.28), transparent 60%),
+    radial-gradient(40rem 26rem at -8% 108%, rgba(233, 124, 85, 0.55), transparent 52%),
+    linear-gradient(150deg, #FEA88A 0%, var(--gold) 45%, var(--gold-deep) 100%);
+  color: var(--slate);
   padding: 7.5rem 0 9rem;
   overflow: hidden;
 }
@@ -227,7 +228,7 @@ img { max-width: 100%; }
   width: 64px;
   height: 5px;
   border-radius: 3px;
-  background: linear-gradient(90deg, var(--cream), var(--gold));
+  background: linear-gradient(90deg, var(--slate), var(--orange));
   margin-bottom: 1.75rem;
 }
 .hero p {
@@ -236,27 +237,27 @@ img { max-width: 100%; }
   font-weight: 700;
   line-height: 1.55;
   max-width: 44rem;
-  color: #fff;
+  color: var(--slate);
 }
 /* understated marker underline for the key phrase — visible on orange
    without shouting */
 .hero h1 .hl {
-  background: linear-gradient(90deg, rgba(253, 141, 101, 0.85), rgba(253, 141, 101, 0.55));
+  background: linear-gradient(90deg, rgba(10, 48, 85, 0.7), rgba(10, 48, 85, 0.4));
   background-size: 100% 0.11em;
   background-position: 0 100%;
   background-repeat: no-repeat;
   padding-bottom: 0.12em;
 }
 .hero .actions { margin-top: 2.5rem; display: flex; gap: 0.9rem; flex-wrap: wrap; }
-.hero .actions .btn { background: #fff; color: var(--slate); box-shadow: 0 8px 28px rgba(45, 45, 45, 0.25); }
-.hero .actions .btn:hover { background: var(--cream); color: var(--slate); transform: translateY(-2px); }
+.hero .actions .btn { background: var(--grad-slate); color: #fff; box-shadow: 0 8px 28px rgba(10, 48, 85, 0.3); }
+.hero .actions .btn:hover { background: var(--grad-slate); color: #fff; transform: translateY(-2px); }
 .hero .actions .btn-outline {
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.65);
-  color: #fff;
+  border: 2px solid rgba(10, 48, 85, 0.55);
+  color: var(--slate);
   box-shadow: none;
 }
-.hero .actions .btn-outline:hover { background: rgba(255, 255, 255, 0.14); border-color: #fff; }
+.hero .actions .btn-outline:hover { background: rgba(10, 48, 85, 0.08); border-color: var(--slate); }
 
 /* ============================================================
    Full-bleed bands
