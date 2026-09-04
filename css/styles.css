@@ -707,7 +707,7 @@ th { background: var(--grad-slate); color: #fff; font-weight: 700; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(150deg, rgba(198, 93, 0, 0.30) 0%, rgba(253, 141, 101, 0.14) 45%, rgba(10, 48, 85, 0.45) 100%);
+  background: linear-gradient(150deg, rgba(198, 93, 0, 0.55) 0%, rgba(253, 141, 101, 0.30) 45%, rgba(10, 48, 85, 0.72) 100%);
   mix-blend-mode: multiply;
 }
 .photo-banner {
