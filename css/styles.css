@@ -474,10 +474,11 @@ p + p { margin-top: 0.9rem; }
   transition-delay: calc(var(--i) * 16ms), 0s;
   outline: none;
 }
+/* each state's bounding box gets its own light-to-deep sweep */
 .map-state.t0 { fill: url(#hatch); }
-.map-state.t1 { fill: var(--teal); }
-.map-state.t2 { fill: var(--orange); }
-.map-state.t3 { fill: var(--slate); }
+.map-state.t1 { fill: url(#grad-t1); }
+.map-state.t2 { fill: url(#grad-t2); }
+.map-state.t3 { fill: url(#grad-t3); }
 
 /* per-CoC location pins, revealed on state hover/focus */
 .state-pins { pointer-events: none; opacity: 0; transition: opacity 0.25s var(--ease); }
@@ -526,9 +527,9 @@ p + p { margin-top: 0.9rem; }
   border: 1px solid rgba(45, 45, 45, 0.12);
 }
 .map-legend .sw.t0 { background: repeating-linear-gradient(45deg, #EFECE7 0 3px, #D8D3CB 3px 4.5px); }
-.map-legend .sw.t1 { background: var(--teal); }
-.map-legend .sw.t2 { background: var(--orange); }
-.map-legend .sw.t3 { background: var(--slate); }
+.map-legend .sw.t1 { background: linear-gradient(135deg, #17859B, #0A5260); }
+.map-legend .sw.t2 { background: linear-gradient(135deg, #D96E0E, #9A4900); }
+.map-legend .sw.t3 { background: linear-gradient(135deg, #14497D, #072340); }
 .map-legend .sw.pin { background: var(--coral); border-radius: 50%; width: 14px; height: 14px; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(45, 45, 45, 0.15); }
 
 /* ============================================================
