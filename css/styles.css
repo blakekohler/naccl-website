@@ -209,6 +209,16 @@ img { max-width: 100%; }
   mix-blend-mode: luminosity;
   pointer-events: none;
 }
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.1;
+  mix-blend-mode: luminosity;
+  pointer-events: none;
+}
 .hero .container { position: relative; z-index: 1; }
 .hero h1 {
   font-size: clamp(2.3rem, 5.2vw, 3.7rem);
@@ -298,6 +308,16 @@ img { max-width: 100%; }
   line-height: 1.2;
   margin: 3.25rem 0 1.4rem;
   text-wrap: balance;
+}
+/* teal→navy gradient text on light bands; dark bands keep solid white */
+@supports (-webkit-background-clip: text) {
+  .section-bar:not(.band-dark .section-bar) {
+    background: linear-gradient(100deg, var(--teal) 0%, var(--slate) 55%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+  }
 }
 .section-bar::after {
   content: "";
@@ -560,7 +580,8 @@ blockquote footer::before {
   font-weight: 700;
   margin: 1.9rem 0 0.4rem;
   padding-left: 0.9rem;
-  border-left: 3px solid var(--gold);
+  border-left: 3px solid var(--teal);
+  border-image: linear-gradient(180deg, var(--teal), var(--slate)) 1;
 }
 
 /* Simple content lists */
@@ -633,8 +654,8 @@ hr.gold-rule {
    ============================================================ */
 .site-footer {
   background:
-    radial-gradient(50rem 24rem at 92% -30%, rgba(198, 93, 0, 0.14), transparent 55%),
-    linear-gradient(180deg, var(--charcoal) 0%, #1e1e1e 100%);
+    radial-gradient(50rem 24rem at 92% -30%, rgba(253, 141, 101, 0.10), transparent 55%),
+    linear-gradient(160deg, #0C3F55 0%, var(--slate) 45%, #061B31 100%);
   color: #fff;
   margin-top: 4.5rem;
   padding: 3.5rem 0 2.5rem;
@@ -718,4 +739,5 @@ main:has(.band-dark:last-child) + .site-footer { margin-top: 0; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
   .reveal { opacity: 1; transform: none; }
+  .hero-video { display: none; }
 }

@@ -11,6 +11,12 @@ if (toggle && nav) {
   });
 }
 
+// Background video: skip entirely on small screens and for reduced motion
+const heroVideo = document.querySelector('.hero-video');
+if (heroVideo && (reducedMotion || window.matchMedia('(max-width: 700px)').matches)) {
+  heroVideo.remove();
+}
+
 // Compact header once the page scrolls
 const header = document.querySelector('.site-header');
 if (header) {
