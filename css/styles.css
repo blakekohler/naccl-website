@@ -1,6 +1,7 @@
 /* NACCL brand palette — per NACCL Brand Specification 8-24-26.
    Gold is never text. Orange is display only; #BE5900 is the text-safe
-   variant for links and small text. */
+   variant for links and small text. Never orange on slate, never gold on white
+   as text pairings. */
 :root {
   --orange: #C65D00;
   --orange-text: #BE5900;
@@ -12,22 +13,29 @@
   --slate-pressed: #243A4C;
   --slate-tint: #E0E4E7;
   --gold: #C4953A;
+  --gold-deep: #99742D;
   --gold-tint: #F6EFE1;
   --charcoal: #2D2D2D;
   --light-gray: #E0DEDA;
   --cream: #FDF6ED;
   --focus: #ABB7C0;
 
-  --radius: 14px;
+  --radius: 16px;
   --radius-sm: 10px;
-  --shadow-sm: 0 1px 2px rgba(45, 45, 45, 0.06), 0 2px 8px rgba(45, 45, 45, 0.05);
-  --shadow-md: 0 4px 12px rgba(45, 45, 45, 0.08), 0 12px 32px rgba(45, 45, 45, 0.07);
+  --shadow-sm: 0 1px 2px rgba(45, 45, 45, 0.05), 0 3px 10px rgba(45, 45, 45, 0.05);
+  --shadow-md: 0 6px 16px rgba(45, 45, 45, 0.08), 0 16px 40px rgba(45, 45, 45, 0.08);
+  --shadow-lg: 0 12px 28px rgba(45, 45, 45, 0.12), 0 30px 70px rgba(45, 45, 45, 0.12);
   --ease: cubic-bezier(0.25, 0.6, 0.35, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --grad-brand: linear-gradient(90deg, var(--orange), var(--gold));
+  --grad-orange: linear-gradient(135deg, var(--orange) 0%, var(--orange-pressed) 100%);
+  --grad-slate: linear-gradient(135deg, var(--slate) 0%, var(--slate-pressed) 100%);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 
 body {
   font-family: Carlito, Calibri, sans-serif;
@@ -39,25 +47,36 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+::selection { background: var(--slate); color: #fff; }
+
 a { color: var(--orange-text); text-underline-offset: 3px; transition: color 0.2s var(--ease); }
 a:hover { color: var(--orange-hover); }
 
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 3px; }
 
-.container { max-width: 1060px; margin: 0 auto; padding: 0 1.5rem; }
+img { max-width: 100%; }
 
-/* Header and wordmark: NACCL in bold slate, letter-spaced, full name
-   beneath in charcoal at roughly half the size. */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ============================================================
+   Header — glassy, sticky, compacts on scroll
+   ============================================================ */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
   border-bottom: 3px solid var(--orange);
-  border-image: linear-gradient(90deg, var(--orange), var(--gold)) 1;
+  border-image: var(--grad-brand) 1;
   padding: 1rem 0;
+  transition: padding 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease);
+}
+.site-header.scrolled {
+  padding: 0.55rem 0;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 6px 24px rgba(45, 45, 45, 0.08);
 }
 .site-header .container {
   max-width: 1320px;
@@ -68,30 +87,37 @@ a:hover { color: var(--orange-hover); }
   gap: 0.75rem 1.5rem;
 }
 .wordmark { text-decoration: none; display: block; flex-shrink: 0; }
-.wordmark img { display: block; height: 44px; width: auto; }
+.wordmark img { display: block; height: 44px; width: auto; transition: height 0.3s var(--ease); }
+.site-header.scrolled .wordmark img { height: 38px; }
 
 .site-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 0.25rem 1.15rem; }
 .site-nav a {
+  position: relative;
   color: var(--slate);
   text-decoration: none;
   font-weight: 700;
   font-size: 0.92rem;
   white-space: nowrap;
   padding: 0.3rem 0;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+  transition: color 0.2s var(--ease);
 }
-.site-nav a:hover { color: var(--slate-hover); border-bottom-color: var(--light-gray); }
-.site-nav a[aria-current="page"] { color: var(--orange-text); border-bottom-color: var(--orange); }
-/* .site-nav a outranks .btn — restate button styles for the nav CTA */
-.site-nav a.btn {
-  margin-left: 0.4rem;
-  border-bottom: none;
-  color: #fff;
-  padding: 0.55rem 1.2rem;
-  font-size: 0.92rem;
+.site-nav a:not(.btn)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--grad-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
 }
-.site-nav a.btn:hover { border-bottom: none; color: #fff; }
+.site-nav a:not(.btn):hover::after,
+.site-nav a[aria-current="page"]:not(.btn)::after { transform: scaleX(1); }
+.site-nav a:hover { color: var(--slate-hover); }
+.site-nav a[aria-current="page"] { color: var(--orange-text); }
 
 /* Hamburger toggle — hidden on desktop */
 .nav-toggle {
@@ -117,88 +143,127 @@ a:hover { color: var(--orange-hover); }
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-/* Buttons — orange passes contrast at large/UI sizes only */
+/* ============================================================
+   Buttons — gradient pills
+   ============================================================ */
 .btn {
   display: inline-block;
-  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-pressed) 100%);
+  background: var(--grad-orange);
+  background-size: 150% 150%;
+  background-position: 0% 0%;
   color: #fff;
   font-weight: 700;
   font-size: 1rem;
-  padding: 0.7rem 1.6rem;
+  padding: 0.75rem 1.7rem;
   border: none;
   border-radius: 999px;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
-  transition: background 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease), filter 0.2s var(--ease);
+  box-shadow: 0 2px 8px rgba(154, 73, 0, 0.25);
+  transition: background-position 0.35s var(--ease), transform 0.2s var(--ease), box-shadow 0.25s var(--ease);
 }
-.btn:hover { filter: brightness(0.94); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow-md); }
-.btn:active { filter: brightness(0.86); transform: translateY(0); }
-.btn-slate { background: linear-gradient(135deg, var(--slate) 0%, var(--slate-pressed) 100%); }
+.btn:hover {
+  background-position: 100% 100%;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(154, 73, 0, 0.3);
+}
+.btn:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(154, 73, 0, 0.25); }
+.btn-slate { background: var(--grad-slate); background-size: 150% 150%; box-shadow: 0 2px 8px rgba(36, 58, 76, 0.25); }
+.btn-slate:hover { box-shadow: 0 10px 24px rgba(36, 58, 76, 0.3); }
 
-/* Hero — orange carries the identity here. White on orange passes contrast
-   only at large sizes, so the heading and lede are both large/bold. */
+/* .site-nav a outranks .btn — restate button styles for the nav CTA */
+.site-nav a.btn {
+  margin-left: 0.4rem;
+  color: #fff;
+  padding: 0.55rem 1.3rem;
+  font-size: 0.92rem;
+}
+.site-nav a.btn:hover { color: #fff; }
+
+/* ============================================================
+   Hero — layered brand-hue mesh over the orange gradient.
+   White on orange passes contrast only at large/bold sizes,
+   so the heading and lede are both large and bold.
+   ============================================================ */
 .hero {
+  position: relative;
   background:
-    radial-gradient(900px 480px at 88% -10%, rgba(253, 246, 237, 0.22), transparent 60%),
-    radial-gradient(700px 420px at -5% 110%, rgba(45, 45, 45, 0.18), transparent 55%),
+    radial-gradient(56rem 30rem at 82% -12%, rgba(253, 246, 237, 0.28), transparent 55%),
+    radial-gradient(44rem 28rem at 108% 88%, rgba(196, 149, 58, 0.45), transparent 55%),
+    radial-gradient(40rem 26rem at -8% 108%, rgba(45, 45, 45, 0.30), transparent 52%),
     linear-gradient(150deg, var(--orange) 0%, var(--orange-hover) 55%, var(--orange-pressed) 100%);
   color: #fff;
-  padding: 6.5rem 0 6rem;
+  padding: 7.5rem 0 9rem;
+  overflow: hidden;
 }
 .hero h1 {
-  font-size: clamp(2rem, 4.5vw, 2.9rem);
+  font-size: clamp(2.3rem, 5.2vw, 3.7rem);
   font-weight: 700;
-  line-height: 1.18;
-  letter-spacing: -0.01em;
-  max-width: 48rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 52rem;
+  text-wrap: balance;
 }
 .hero h1::before {
   content: "";
   display: block;
-  width: 56px;
+  width: 64px;
   height: 5px;
   border-radius: 3px;
-  background: var(--cream);
-  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, var(--cream), var(--gold));
+  margin-bottom: 1.75rem;
 }
-.hero p { margin-top: 1.25rem; font-size: 1.3rem; font-weight: 700; line-height: 1.55; max-width: 42rem; color: #fff; }
-.hero .actions { margin-top: 2.25rem; display: flex; gap: 0.85rem; flex-wrap: wrap; }
-/* Primary button reversed to white so it reads on the orange ground */
-.hero .actions .btn { background: #fff; color: var(--slate); }
-.hero .actions .btn:hover { background: var(--cream); color: var(--slate); filter: none; }
+.hero p {
+  margin-top: 1.4rem;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.55;
+  max-width: 44rem;
+  color: #fff;
+}
+.hero .actions { margin-top: 2.5rem; display: flex; gap: 0.9rem; flex-wrap: wrap; }
+.hero .actions .btn { background: #fff; color: var(--slate); box-shadow: 0 8px 28px rgba(45, 45, 45, 0.25); }
+.hero .actions .btn:hover { background: var(--cream); color: var(--slate); transform: translateY(-2px); }
 .hero .actions .btn-outline {
   background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.65);
   color: #fff;
   box-shadow: none;
 }
-.hero .actions .btn-outline:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff; filter: none; }
+.hero .actions .btn-outline:hover { background: rgba(255, 255, 255, 0.14); border-color: #fff; }
 
-/* Page title band for interior pages: bold orange title on cream */
-.page-title {
+/* ============================================================
+   Full-bleed bands
+   ============================================================ */
+.band { padding: 4.5rem 0; }
+.band-cream { background: linear-gradient(180deg, var(--cream) 0%, var(--gold-tint) 100%); }
+.band-dark {
   background:
-    radial-gradient(700px 360px at 92% 0%, rgba(198, 93, 0, 0.10), transparent 60%),
-    linear-gradient(150deg, var(--cream) 0%, var(--orange-tint) 100%);
-  padding: 3.75rem 0;
-  border-bottom: 1px solid var(--light-gray);
+    radial-gradient(50rem 26rem at 90% -20%, rgba(196, 149, 58, 0.22), transparent 55%),
+    linear-gradient(150deg, var(--slate) 0%, var(--slate-pressed) 100%);
+  color: #fff;
 }
-.page-title h1 {
-  color: var(--orange);
-  font-size: clamp(1.7rem, 3.5vw, 2.2rem);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-.page-title p { margin-top: 0.6rem; max-width: 44rem; font-size: 1.15rem; }
+.band-dark .section-bar { color: #fff; }
+.band-dark .btn { background: #fff; color: var(--slate); }
+.band-dark .btn:hover { background: var(--cream); color: var(--slate); }
+.band-dark .btn-outline { background: transparent; border: 2px solid rgba(255, 255, 255, 0.6); color: #fff; }
+.band-dark .btn-outline:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff; }
 
-/* Section headings: bold slate with an orange→gold gradient accent rule */
+/* Stats band pulled up over the hero edge */
+.band-overlap { padding-top: 0; margin-top: -4.5rem; position: relative; z-index: 2; }
+
+/* ============================================================
+   Section headings — bold slate with a gradient accent rule
+   ============================================================ */
 .section-bar {
   color: var(--slate);
   font-weight: 700;
-  font-size: 1.6rem;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-  margin: 3.25rem 0 1.25rem;
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin: 3.25rem 0 1.4rem;
+  text-wrap: balance;
 }
 .section-bar::after {
   content: "";
@@ -206,52 +271,101 @@ a:hover { color: var(--orange-hover); }
   width: 56px;
   height: 4px;
   border-radius: 2px;
-  margin-top: 0.55rem;
-  background: linear-gradient(90deg, var(--orange), var(--gold));
+  margin-top: 0.6rem;
+  background: var(--grad-brand);
 }
+.band .section-bar:first-child,
+section.block .section-bar:first-child { margin-top: 0; }
 section.block { padding: 1rem 0 2.25rem; }
+.band section.block { padding: 0; }
 
 /* Subheads: bold orange */
-h3.subhead { color: var(--orange); font-weight: 700; font-size: 1.18rem; margin: 1.75rem 0 0.5rem; }
+h3.subhead { color: var(--orange); font-weight: 700; font-size: 1.2rem; margin: 1.85rem 0 0.5rem; }
 
 p + p { margin-top: 0.9rem; }
 
-/* Statistic cards: solid fills in slate, orange, gold, charcoal with white numerals */
+/* Page title band for interior pages */
+.page-title {
+  background:
+    radial-gradient(44rem 22rem at 92% -10%, rgba(198, 93, 0, 0.12), transparent 60%),
+    linear-gradient(150deg, var(--cream) 0%, var(--orange-tint) 100%);
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+.page-title h1 {
+  color: var(--orange);
+  font-size: clamp(1.8rem, 3.8vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.page-title h1::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  border-radius: 2px;
+  margin-top: 0.7rem;
+  background: var(--grad-brand);
+}
+.page-title p { margin-top: 0.85rem; max-width: 46rem; font-size: 1.18rem; }
+
+/* ============================================================
+   Statistic cards — solid brand fills, white numerals
+   ============================================================ */
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.1rem;
-  margin: 1.5rem 0 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1.15rem;
+  margin: 1.5rem 0 2rem;
 }
 .stat-card {
+  position: relative;
   color: #fff;
-  padding: 1.75rem 1.4rem;
+  padding: 1.9rem 1.5rem;
   border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
-.stat-card .number { font-size: 2.5rem; font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; }
-.stat-card .label { font-size: 0.95rem; margin-top: 0.45rem; opacity: 0.94; }
+.stat-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(18rem 10rem at 100% 0%, rgba(255, 255, 255, 0.14), transparent 55%);
+  pointer-events: none;
+}
+.stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.stat-card .number {
+  font-size: clamp(2.3rem, 4vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.stat-card .label { font-size: 0.97rem; margin-top: 0.5rem; opacity: 0.94; }
 .stat-card.slate { background: linear-gradient(150deg, var(--slate) 0%, var(--slate-pressed) 100%); }
 .stat-card.orange { background: linear-gradient(150deg, var(--orange) 0%, var(--orange-pressed) 100%); }
-.stat-card.gold { background: linear-gradient(150deg, var(--gold) 0%, #99742D 100%); }
+.stat-card.gold { background: linear-gradient(150deg, var(--gold) 0%, var(--gold-deep) 100%); }
 .stat-card.charcoal { background: linear-gradient(150deg, var(--charcoal) 0%, #1a1a1a 100%); }
 
-/* Cards */
+/* ============================================================
+   Cards
+   ============================================================ */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.25rem;
-  margin: 1.4rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.35rem;
+  margin: 1.5rem 0;
 }
 .card {
+  position: relative;
   background: #fff;
   border: 1px solid var(--light-gray);
   border-radius: var(--radius);
-  padding: 1.75rem 1.6rem;
+  padding: 1.85rem 1.7rem;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
-  position: relative;
   overflow: hidden;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 .card::before {
   content: "";
@@ -260,91 +374,146 @@ p + p { margin-top: 0.9rem; }
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--orange), var(--gold));
+  background: var(--grad-brand);
 }
-.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.card h3 { color: var(--slate); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
-.card p { font-size: 0.98rem; }
-.card.plain { background: #fff; }
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: transparent; }
+.card h3 { color: var(--slate); font-size: 1.13rem; font-weight: 700; margin-bottom: 0.55rem; letter-spacing: -0.01em; }
+.card p { font-size: 0.99rem; }
 
-/* Pull quotes on warm background panels */
+/* ============================================================
+   Pull quotes — warm gradient panels
+   ============================================================ */
 blockquote {
+  position: relative;
   background: linear-gradient(150deg, var(--cream) 0%, var(--gold-tint) 100%);
   border-left: 4px solid var(--gold);
   border-radius: var(--radius);
-  padding: 1.5rem 1.75rem;
-  margin: 1.4rem 0;
+  padding: 1.6rem 1.9rem 1.6rem 2rem;
+  margin: 1.5rem 0;
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: 1.12rem;
   box-shadow: var(--shadow-sm);
 }
 blockquote footer {
   font-style: normal;
   font-weight: 700;
   color: var(--slate);
-  margin-top: 0.65rem;
+  margin-top: 0.7rem;
   font-size: 0.95rem;
 }
-
-/* Timeline list */
-.timeline { list-style: none; margin: 1.25rem 0; }
-.timeline li {
-  border-left: 3px solid var(--slate-tint);
-  padding: 0 0 1.75rem 1.5rem;
-  position: relative;
+blockquote footer::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--grad-brand);
+  margin-right: 0.6rem;
+  vertical-align: middle;
 }
+
+/* ============================================================
+   Timeline — gradient spine
+   ============================================================ */
+.timeline { list-style: none; margin: 1.5rem 0; position: relative; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--orange), var(--gold));
+}
+.timeline li { padding: 0 0 2rem 1.75rem; position: relative; }
 .timeline li::before {
   content: "";
   position: absolute;
-  left: -8.5px;
+  left: -6.5px;
   top: 0.45rem;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--orange), var(--orange-pressed));
+  background: var(--grad-orange);
   border: 3px solid #fff;
-  box-shadow: 0 0 0 1px var(--light-gray);
+  box-shadow: 0 0 0 3px var(--orange-tint);
 }
-.timeline li:last-child { padding-bottom: 0.25rem; border-left-color: transparent; }
-.timeline .when { font-weight: 700; color: var(--orange-text); font-size: 0.95rem; }
-.timeline h3 { color: var(--slate); font-size: 1.1rem; margin: 0.1rem 0 0.2rem; }
+.timeline li:last-child { padding-bottom: 0.25rem; }
+.timeline .when { font-weight: 700; color: var(--orange-text); font-size: 0.97rem; }
+.timeline h3 { color: var(--slate); font-size: 1.15rem; margin: 0.1rem 0 0.25rem; letter-spacing: -0.01em; }
 
-/* People */
+/* ============================================================
+   People — avatar initials (injected by js/nav.js)
+   ============================================================ */
 .people-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.1rem;
-  margin: 1.4rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.2rem;
+  margin: 1.5rem 0;
 }
 .person {
-  background: linear-gradient(150deg, #fff 0%, var(--orange-tint) 140%);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1rem;
+  align-items: center;
+  background: linear-gradient(150deg, #fff 0%, var(--orange-tint) 160%);
   border: 1px solid var(--light-gray);
   border-radius: var(--radius);
   padding: 1.35rem 1.5rem;
-  border-left: 4px solid var(--orange);
   box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
-.person .name { font-weight: 700; color: var(--slate); font-size: 1.08rem; }
+.person:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.person .avatar {
+  grid-row: span 3;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--grad-slate);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+.person .name { font-weight: 700; color: var(--slate); font-size: 1.08rem; letter-spacing: -0.01em; }
 .person .role { color: var(--charcoal); font-size: 0.95rem; }
-.person .coc { color: var(--charcoal); font-size: 0.9rem; margin-top: 0.2rem; opacity: 0.85; }
+.person .coc { color: var(--charcoal); font-size: 0.9rem; opacity: 0.82; }
+/* without JS, fall back to a simple stacked card */
+.person:not(:has(.avatar)) { grid-template-columns: 1fr; }
 
-/* Definition-style FAQ */
-.faq h3 { color: var(--slate); font-size: 1.12rem; font-weight: 700; margin: 1.75rem 0 0.4rem; }
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq h3 {
+  color: var(--slate);
+  font-size: 1.14rem;
+  font-weight: 700;
+  margin: 1.9rem 0 0.4rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--gold);
+}
 
 /* Simple content lists */
 main ul.content-list { margin: 0.75rem 0 0.75rem 1.4rem; }
-main ul.content-list li { margin-bottom: 0.45rem; }
+main ul.content-list li { margin-bottom: 0.5rem; }
+main ul.content-list li::marker { color: var(--orange-text); }
 
-/* Forms */
-form.stacked { max-width: 34rem; margin: 1.75rem 0 2.5rem; }
-form.stacked label { display: block; font-weight: 700; color: var(--slate); margin: 1.1rem 0 0.35rem; }
+/* ============================================================
+   Forms
+   ============================================================ */
+form.stacked { max-width: 36rem; margin: 1.75rem 0 2.5rem; }
+form.stacked label { display: block; font-weight: 700; color: var(--slate); margin: 1.15rem 0 0.35rem; }
 form.stacked input,
 form.stacked select,
 form.stacked textarea {
   width: 100%;
   font-family: inherit;
   font-size: 1rem;
-  padding: 0.7rem 0.85rem;
+  padding: 0.75rem 0.95rem;
   border: 1.5px solid var(--light-gray);
   border-radius: var(--radius-sm);
   background: #fff;
@@ -359,58 +528,78 @@ form.stacked select:focus,
 form.stacked textarea:focus {
   outline: none;
   border-color: var(--slate);
-  box-shadow: 0 0 0 3px var(--slate-tint);
+  box-shadow: 0 0 0 4px var(--slate-tint);
 }
-fieldset { border: 1.5px solid var(--light-gray); border-radius: var(--radius-sm); padding: 0.85rem 1.1rem 1.1rem; margin-top: 1.1rem; }
+fieldset { border: 1.5px solid var(--light-gray); border-radius: var(--radius-sm); padding: 0.9rem 1.15rem 1.15rem; margin-top: 1.15rem; }
 legend { font-weight: 700; color: var(--slate); padding: 0 0.4rem; }
 fieldset label { font-weight: 400 !important; color: var(--charcoal) !important; margin: 0.45rem 0 0 !important; }
-fieldset input[type="checkbox"] { width: auto; margin-right: 0.5rem; accent-color: var(--slate); }
-form.stacked .btn { margin-top: 1.6rem; }
+fieldset input[type="checkbox"] { width: auto; margin-right: 0.55rem; accent-color: var(--slate); }
+form.stacked .btn { margin-top: 1.7rem; }
 
 /* Tables */
 table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
 th, td { text-align: left; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--light-gray); }
-th { background: var(--slate); color: #fff; font-weight: 700; }
+th { background: var(--grad-slate); color: #fff; font-weight: 700; }
 
-/* Gold rule divider (gold as a fill, never text) */
+/* Gradient accent rule */
 hr.gold-rule {
   border: none;
   height: 4px;
   width: 96px;
   border-radius: 2px;
-  background: linear-gradient(90deg, var(--orange), var(--gold));
+  background: var(--grad-brand);
   margin: 3rem 0 2.5rem;
 }
 
-/* Footer: charcoal dark panel */
+/* ============================================================
+   Footer
+   ============================================================ */
 .site-footer {
-  background: linear-gradient(180deg, var(--charcoal) 0%, #1f1f1f 100%);
+  background:
+    radial-gradient(50rem 24rem at 92% -30%, rgba(198, 93, 0, 0.14), transparent 55%),
+    linear-gradient(180deg, var(--charcoal) 0%, #1e1e1e 100%);
   color: #fff;
-  margin-top: 4rem;
-  padding: 3rem 0 2.5rem;
+  margin-top: 4.5rem;
+  padding: 3.5rem 0 2.5rem;
   border-top: 4px solid var(--orange);
-  border-image: linear-gradient(90deg, var(--orange), var(--gold)) 1;
+  border-image: var(--grad-brand) 1;
 }
+main:has(.band-dark:last-child) + .site-footer { margin-top: 0; }
 .site-footer .cols { display: flex; flex-wrap: wrap; gap: 2.5rem 3.5rem; justify-content: space-between; }
-.site-footer .acronym { font-weight: 700; letter-spacing: 0.18em; font-size: 1.25rem; }
-.site-footer p { font-size: 0.95rem; max-width: 26rem; margin-top: 0.5rem; color: rgba(255, 255, 255, 0.85); }
+.site-footer .footer-logo { display: block; height: 44px; width: auto; }
+.site-footer p { font-size: 0.95rem; max-width: 26rem; margin-top: 0.75rem; color: rgba(255, 255, 255, 0.85); }
 .site-footer nav a {
   display: block;
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.95rem;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
   text-decoration: none;
+  transition: color 0.2s var(--ease), transform 0.2s var(--ease);
 }
-.site-footer nav a:hover { color: #fff; text-decoration: underline; }
+.site-footer nav a:hover { color: #fff; transform: translateX(3px); }
 .site-footer .legal {
-  margin-top: 2.25rem;
+  margin-top: 2.5rem;
   padding-top: 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Mobile navigation: hamburger replaces the link row */
+/* ============================================================
+   Scroll reveal (classes applied by js/nav.js; no-JS users
+   simply see everything, since .reveal is only added by script)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transition-delay: var(--d, 0s);
+}
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
 @media (max-width: 920px) {
   .nav-toggle { display: flex; }
   .site-nav {
@@ -420,29 +609,36 @@ hr.gold-rule {
     align-items: stretch;
     gap: 0;
     padding-top: 0.75rem;
+    animation: menuIn 0.3s var(--ease-out);
   }
   .site-nav.open { display: flex; }
   .site-nav a {
     font-size: 1.05rem;
-    padding: 0.7rem 0.25rem;
+    padding: 0.75rem 0.25rem;
     border-bottom: 1px solid var(--light-gray);
   }
-  .site-nav a[aria-current="page"] { border-bottom-color: var(--orange); }
+  .site-nav a:not(.btn)::after { display: none; }
   .site-nav a.btn {
-    margin: 0.85rem 0 0.25rem;
+    margin: 0.9rem 0 0.25rem;
     text-align: center;
-    padding: 0.7rem 1.2rem;
+    padding: 0.75rem 1.2rem;
     font-size: 1rem;
     border-bottom: none;
   }
 }
+@keyframes menuIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 @media (max-width: 700px) {
-  .hero { padding: 3.75rem 0 3.5rem; }
+  .hero { padding: 4.5rem 0 6.5rem; }
+  .band { padding: 3.25rem 0; }
   .wordmark img { height: 38px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { transition-duration: 0.01ms !important; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  .reveal { opacity: 1; transform: none; }
 }
