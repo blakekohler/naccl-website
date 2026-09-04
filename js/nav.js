@@ -14,8 +14,12 @@ if (toggle && nav) {
 // Background video: two staggered copies crossfade for a seamless loop.
 // Skipped entirely on small screens and for reduced motion.
 const heroVideos = document.querySelectorAll('.hero-video');
-if (heroVideos.length && (reducedMotion || window.matchMedia('(max-width: 700px)').matches)) {
+const dropHeroVideos = () => {
   heroVideos.forEach((v) => v.remove());
+  document.querySelector('.hero')?.classList.add('no-video');
+};
+if (heroVideos.length && (reducedMotion || window.matchMedia('(max-width: 700px)').matches)) {
+  dropHeroVideos();
 } else if (heroVideos.length === 2) {
   const FADE = 1.1;
   let [active, standby] = heroVideos;
@@ -31,7 +35,7 @@ if (heroVideos.length && (reducedMotion || window.matchMedia('(max-width: 700px)
   heroVideos.forEach((v) => { v.muted = true; v.defaultMuted = true; });
   first.play()
     .then(() => { first.style.opacity = ''; })
-    .catch(() => heroVideos.forEach((v) => v.remove()));
+    .catch(dropHeroVideos);
   setInterval(() => {
     if (!active.duration || active.paused) return;
     if (active.currentTime > active.duration - FADE - 0.2) {

@@ -214,6 +214,17 @@ img { max-width: 100%; }
   transition: opacity 1s linear;
 }
 .hero-video-b { opacity: 0; }
+/* static poster frame stands in when the video can't play — small
+   screens, reduced motion, or autoplay refused (e.g. Low Power Mode) */
+.hero.no-video::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../img/photos/hero-poster.jpg") center/cover no-repeat;
+  opacity: 0.18;
+  mix-blend-mode: luminosity;
+  pointer-events: none;
+}
 /* Safari overlays its own start-playback glyph on non-playing videos */
 .hero-video::-webkit-media-controls-start-playback-button,
 .hero-video::-webkit-media-controls { display: none !important; }
