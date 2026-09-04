@@ -2,6 +2,16 @@
 
 Static site for the National Association of Continuum of Care Leaders (NACCL) — plain HTML and CSS, no build step.
 
+## Source of truth
+
+The documents in `docs/` govern everything on this site:
+
+- `NACCL_Brand_Direction_8-24-26.docx` — the approved brand standard (colors, typography, voice)
+- `NACCL_Brand_Specification_8-24-26.docx` — implementation detail: hex values, contrast rules, derived web colors, naming and voice rules
+- `About NACCL and FAQs August 2026.docx` — the content source: facts, numbers, dates, quotes, and FAQ copy
+
+Site copy should be traceable to these documents. Do not invent resources, events, quotes, or claims that aren't in them. Key voice rules: the association is NACCL and the people are the CoC Network; use CoC casing (never COC); spell state names in full; never all caps; NACCL complements existing national organizations and avoids "ending homelessness" language.
+
 ## Structure
 
 - `index.html` — home: where things stand, why NACCL exists, timeline, interim leadership
