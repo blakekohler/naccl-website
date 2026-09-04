@@ -324,7 +324,18 @@ p + p { margin-top: 0.9rem; }
   padding: 2rem 1.6rem;
   border-radius: 20px;
   overflow: hidden;
+  background: linear-gradient(145deg, #3A5B77 0%, var(--slate) 45%, var(--slate-pressed) 100%);
+  box-shadow: 0 18px 40px -14px rgba(46, 74, 98, 0.55);
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.stat-card .number::before {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--grad-brand);
+  margin-bottom: 0.9rem;
 }
 /* glass edge + layered light for depth */
 .stat-card::after {
@@ -349,26 +360,7 @@ p + p { margin-top: 0.9rem; }
   font-variant-numeric: tabular-nums;
 }
 .stat-card .label { position: relative; z-index: 1; font-size: 0.97rem; margin-top: 0.5rem; opacity: 0.94; }
-.stat-card.slate {
-  background: linear-gradient(145deg, #3A5B77 0%, var(--slate) 45%, var(--slate-pressed) 100%);
-  box-shadow: 0 18px 40px -14px rgba(46, 74, 98, 0.55);
-}
-.stat-card.orange {
-  background: linear-gradient(145deg, #D96E0E 0%, var(--orange) 45%, var(--orange-pressed) 100%);
-  box-shadow: 0 18px 40px -14px rgba(154, 73, 0, 0.5);
-}
-.stat-card.gold {
-  background: linear-gradient(145deg, #D2A54B 0%, var(--gold) 45%, var(--gold-deep) 100%);
-  box-shadow: 0 18px 40px -14px rgba(153, 116, 45, 0.5);
-}
-.stat-card.charcoal {
-  background: linear-gradient(145deg, #3d3d3d 0%, var(--charcoal) 45%, #191919 100%);
-  box-shadow: 0 18px 40px -14px rgba(26, 26, 26, 0.55);
-}
-.stat-card.slate:hover { box-shadow: 0 26px 52px -14px rgba(46, 74, 98, 0.65); }
-.stat-card.orange:hover { box-shadow: 0 26px 52px -14px rgba(154, 73, 0, 0.6); }
-.stat-card.gold:hover { box-shadow: 0 26px 52px -14px rgba(153, 116, 45, 0.6); }
-.stat-card.charcoal:hover { box-shadow: 0 26px 52px -14px rgba(26, 26, 26, 0.65); }
+.stat-card:hover { box-shadow: 0 26px 52px -14px rgba(46, 74, 98, 0.65); }
 
 /* ============================================================
    Cards
