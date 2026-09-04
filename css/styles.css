@@ -8,10 +8,12 @@
   --orange-hover: #AE5200;
   --orange-pressed: #9A4900;
   --orange-tint: #F6E7D9;
-  --slate: #2E4A62;
-  --slate-hover: #284156;
-  --slate-pressed: #243A4C;
-  --slate-tint: #E0E4E7;
+  /* orange-teal variant: navy replaces slate, teal leads the dark gradients */
+  --slate: #0A3055;
+  --slate-hover: #092B4C;
+  --slate-pressed: #072340;
+  --slate-tint: #DCE6EF;
+  --teal: #0E6B7C;
   --gold: #C4953A;
   --gold-deep: #99742D;
   --gold-tint: #F6EFE1;
@@ -30,7 +32,7 @@
 
   --grad-brand: linear-gradient(90deg, var(--orange), var(--gold));
   --grad-orange: linear-gradient(135deg, var(--orange) 0%, var(--orange-pressed) 100%);
-  --grad-slate: linear-gradient(135deg, var(--slate) 0%, var(--slate-pressed) 100%);
+  --grad-slate: linear-gradient(135deg, var(--teal) 0%, var(--slate) 60%, var(--slate-pressed) 100%);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -262,8 +264,8 @@ img { max-width: 100%; }
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(50rem 26rem at 90% -20%, rgba(196, 149, 58, 0.22), transparent 55%),
-    linear-gradient(150deg, var(--slate) 0%, var(--slate-pressed) 100%);
+    radial-gradient(50rem 26rem at 90% -20%, rgba(196, 149, 58, 0.18), transparent 55%),
+    linear-gradient(150deg, var(--teal) 0%, var(--slate) 55%, var(--slate-pressed) 100%);
   color: #fff;
 }
 .band-dark::before {
@@ -356,8 +358,8 @@ p + p { margin-top: 0.9rem; }
   padding: 2rem 1.6rem;
   border-radius: 20px;
   overflow: hidden;
-  background: linear-gradient(145deg, #3A5B77 0%, var(--slate) 45%, var(--slate-pressed) 100%);
-  box-shadow: 0 18px 40px -14px rgba(46, 74, 98, 0.55);
+  background: linear-gradient(145deg, var(--teal) 0%, var(--slate) 55%, var(--slate-pressed) 100%);
+  box-shadow: 0 18px 40px -14px rgba(10, 48, 85, 0.55);
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 .stat-card .icon {
@@ -408,7 +410,7 @@ p + p { margin-top: 0.9rem; }
   font-variant-numeric: tabular-nums;
 }
 .stat-card .label { position: relative; z-index: 1; font-size: 0.97rem; margin-top: 0.5rem; opacity: 0.94; }
-.stat-card:hover { box-shadow: 0 26px 52px -14px rgba(46, 74, 98, 0.65); }
+.stat-card:hover { box-shadow: 0 26px 52px -14px rgba(10, 48, 85, 0.65); }
 
 /* ============================================================
    Cards
