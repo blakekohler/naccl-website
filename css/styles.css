@@ -199,23 +199,14 @@ img { max-width: 100%; }
   padding: 7.5rem 0 9rem;
   overflow: hidden;
 }
-/* faint photographic texture beneath the gradient */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("../img/photos/neighborhood.jpg") center/cover no-repeat;
-  opacity: 0.09;
-  mix-blend-mode: luminosity;
-  pointer-events: none;
-}
+/* the video is the hero's only texture layer — no photo underneath */
 .hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.1;
+  opacity: 0.18;
   mix-blend-mode: luminosity;
   pointer-events: none;
 }
