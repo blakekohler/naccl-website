@@ -17,6 +17,77 @@ if (heroVideo && (reducedMotion || window.matchMedia('(max-width: 700px)').match
   heroVideo.remove();
 }
 
+// Ambient network animation — nodes drifting and connecting over the hero
+const net = document.querySelector('.hero-net');
+if (net && !reducedMotion && window.innerWidth > 700) {
+  const ctx = net.getContext('2d');
+  const heroEl = net.parentElement;
+  const COUNT = 26;
+  const LINK = 170;
+  let w, h, nodes = [], visible = true;
+
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = heroEl.clientWidth;
+    h = heroEl.clientHeight;
+    net.width = w * dpr;
+    net.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+
+  const spawn = () => {
+    nodes = Array.from({ length: COUNT }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: 1.5 + Math.random() * 1.5,
+      gold: Math.random() < 0.18,
+    }));
+  };
+
+  const tick = () => {
+    if (!visible || document.hidden) { requestAnimationFrame(tick); return; }
+    ctx.clearRect(0, 0, w, h);
+    for (const n of nodes) {
+      n.x += n.vx;
+      n.y += n.vy;
+      if (n.x < -20) n.x = w + 20; else if (n.x > w + 20) n.x = -20;
+      if (n.y < -20) n.y = h + 20; else if (n.y > h + 20) n.y = -20;
+    }
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const d = Math.hypot(dx, dy);
+        if (d < LINK) {
+          ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - d / LINK) * 0.35})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    for (const n of nodes) {
+      ctx.fillStyle = n.gold ? 'rgba(212, 173, 106, 0.9)' : 'rgba(255, 255, 255, 0.85)';
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  };
+
+  resize();
+  spawn();
+  window.addEventListener('resize', () => { resize(); }, { passive: true });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }).observe(heroEl);
+  }
+  requestAnimationFrame(tick);
+}
+
 // Compact header once the page scrolls
 const header = document.querySelector('.site-header');
 if (header) {
