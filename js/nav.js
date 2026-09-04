@@ -15,6 +15,13 @@ if (toggle && nav) {
 const heroVideo = document.querySelector('.hero-video');
 if (heroVideo && (reducedMotion || window.matchMedia('(max-width: 700px)').matches)) {
   heroVideo.remove();
+} else if (heroVideo) {
+  // restart just before the file ends — avoids the flicker native loop causes
+  heroVideo.addEventListener('timeupdate', () => {
+    if (heroVideo.duration && heroVideo.currentTime > heroVideo.duration - 0.35) {
+      heroVideo.currentTime = 0.05;
+    }
+  });
 }
 
 // Ambient network animation — nodes drifting and connecting over the hero
@@ -22,8 +29,8 @@ const net = document.querySelector('.hero-net');
 if (net && !reducedMotion && window.innerWidth > 700) {
   const ctx = net.getContext('2d');
   const heroEl = net.parentElement;
-  const COUNT = 26;
-  const LINK = 170;
+  const COUNT = 60;
+  const LINK = 150;
   let w, h, nodes = [], visible = true;
 
   const resize = () => {
@@ -39,8 +46,8 @@ if (net && !reducedMotion && window.innerWidth > 700) {
     nodes = Array.from({ length: COUNT }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
+      vx: (Math.random() - 0.5) * 0.16,
+      vy: (Math.random() - 0.5) * 0.16,
       r: 1.5 + Math.random() * 1.5,
       gold: Math.random() < 0.18,
     }));
