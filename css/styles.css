@@ -93,8 +93,15 @@ a:hover { color: var(--orange-hover); }
 }
 .site-nav a:hover { color: var(--slate-hover); border-bottom-color: var(--light-gray); }
 .site-nav a[aria-current="page"] { color: var(--orange-text); border-bottom-color: var(--orange); }
-.site-nav .btn { margin-left: 0.5rem; border-bottom: none; }
-.site-nav a.btn:hover { border-bottom: none; }
+/* .site-nav a outranks .btn — restate button styles for the nav CTA */
+.site-nav a.btn {
+  margin-left: 0.5rem;
+  border-bottom: none;
+  color: #fff;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+}
+.site-nav a.btn:hover { border-bottom: none; color: #fff; }
 
 /* Buttons — orange passes contrast at large/UI sizes only */
 .btn {
