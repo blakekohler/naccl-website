@@ -87,11 +87,12 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
 
   const countUp = (el) => {
     const target = parseInt(el.textContent, 10);
+    const suffix = el.textContent.trim().endsWith('+') ? '+' : '';
     const start = performance.now();
     const duration = 1100;
     const tick = (now) => {
       const t = Math.min((now - start) / duration, 1);
-      el.textContent = Math.round((1 - Math.pow(1 - t, 3)) * target);
+      el.textContent = Math.round((1 - Math.pow(1 - t, 3)) * target) + suffix;
       if (t < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
@@ -102,7 +103,7 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('in-view');
       const number = entry.target.querySelector?.('.number');
-      if (number && /^\d+$/.test(number.textContent.trim()) && !number.dataset.counted) {
+      if (number && /^\d+\+?$/.test(number.textContent.trim()) && !number.dataset.counted) {
         number.dataset.counted = 'true';
         countUp(number);
       }
