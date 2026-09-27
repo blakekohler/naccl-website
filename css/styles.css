@@ -533,6 +533,11 @@ p + p { margin-top: 0.9rem; }
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: transparent; }
 .card h3 { color: var(--slate); font-size: 1.13rem; font-weight: 700; margin-bottom: 0.55rem; letter-spacing: -0.01em; }
 .card p { font-size: 0.99rem; }
+/* Sponsorship tier / add-on cards */
+.card .tier-price { font-size: 1.7rem; font-weight: 700; color: var(--orange-text); margin: -0.15rem 0 0.75rem; letter-spacing: -0.01em; }
+.card ul.tier-benefits { list-style: none; margin: 0; padding: 0; }
+.card ul.tier-benefits li { position: relative; padding-left: 1.3rem; margin-bottom: 0.45rem; font-size: 0.95rem; line-height: 1.5; }
+.card ul.tier-benefits li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--grad-brand); }
 
 /* ============================================================
    Founding-member map — four-tier choropleth per the brand
